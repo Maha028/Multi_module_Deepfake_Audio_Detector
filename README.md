@@ -1,38 +1,33 @@
-## ✅ `README.md` (Deepfake Audio Detector – Forensics Project)
-
-```markdown
 # 🎧 Multi‑module Deepfake Audio Detector
 
-> A modular deepfake audio detection pipeline for digital forensics — blending classical ML and deep learning models to validate audio authenticity.
+**📝 Project Type:** Research project  
+**📚 Course:** Digital Forensics
 
 ---
 
-## 📘 Project Summary
+## Project Overview
 
-This repository implements a **multi-module deepfake audio detection system** developed as a part of a **Digital Forensics course research project**. The tool is designed to detect synthetic or tampered voice recordings using an ensemble of acoustic feature-based models and deep learning classifiers.
-
----
-
-## 🔍 Why Deepfake Detection Matters in Forensics
-
-In the digital forensics field, **voice recordings often serve as critical evidence**. With the rise of deepfake technology, it has become alarmingly easy to synthesize realistic fake audio. This threatens:
-
--  **Integrity of court-admissible evidence**
--  **Impersonation in fraud and social engineering attacks**
--  **Public trust in media and audio surveillance systems**
-
-By equipping forensic analysts with robust deepfake detectors, we help preserve truth and accountability in investigative processes.
+This repository contains a **Jupyter Notebook** implementation of a **multi-module deepfake audio detection system**. The detector analyzes audio samples to identify manipulated (deepfake) content using a combination of feature extraction, machine learning models, and decision fusion techniques.
 
 ---
 
-##  Techniques Used
+## 🎯 Motivation & Forensics Impact
+
+Deepfake audio—synthetic or manipulated voice recordings—pose a growing threat in the forensics domain:
+
+- **Trusted Evidence at Risk:** Audio recordings often serve as key evidence in investigations. Undetected deepfakes can mislead courts or investigations.
+- **Privacy & Security Threats:** Malicious actors may impersonate individuals to deceive victims or manipulate public opinion.
+- **Forensic Integrity:** Robust detection tools are critical to maintain trust in audio-based evidence and uphold justice in legal systems.
+
+---
+## 🛠️ Techniques Used
 
 | Module        | Description                                  |
 |---------------|----------------------------------------------|
-| Entropy-Based | Logistic Regression on entropy-based features|
-| MFCC-Based    | Random Forest using Mel-Frequency Cepstral Coefficients |
-| MelCNN        | CNN trained on mel-spectrograms              |
-| RawWaveformCNN| CNN trained directly on waveform inputs      |
+| **Entropy-Based** | Logistic Regression on entropy-based features|
+| **MFCC-Based**    | Random Forest using Mel-Frequency Cepstral Coefficients |
+| **MelCNN**        | CNN trained on mel-spectrograms              |
+| **RawWaveformCNN**| CNN trained directly on waveform inputs      |
 
 Each model is evaluated individually, then combined using ensemble decision strategies for better generalization and detection reliability.
 
@@ -40,14 +35,14 @@ Each model is evaluated individually, then combined using ensemble decision stra
 
 ## 📈 Experimental Results
 
-After training and evaluating on the ASVspoof 2019 dataset (subset of 5,000 samples):
+After training and evaluating on the ASVspoof 2019 dataset:
 
 - **Entropy Classifier (Logistic Regression)**
   - Validation Accuracy: ~**81.2%**
   - Test Accuracy: ~**80.5%**
 
 - **MFCC Classifier (Random Forest)**
-  - Validation Accuracy: ~**91.6%**
+  - Validation Accuracy: ~**92.6%**
   - Test Accuracy: ~**90.7%**
 
 - **MelCNN**
@@ -55,8 +50,55 @@ After training and evaluating on the ASVspoof 2019 dataset (subset of 5,000 samp
   - Test Accuracy: ~**89.5%**
 
 - **RawCNN**
-  - Validation Accuracy: ~**88.1%**
-  - Test Accuracy: ~**87.4%**
+  - Validation Accuracy: ~**91.1%**
+  - Test Accuracy: ~**89.4%**
+
+---
+
+## 🧪 Dataset
+
+- Dataset used: **ASVspoof 2019 LA** (Logical Access subset)
+- Format: FLAC audio files
+- Labels: `bonafide` (real), `spoof` (deepfake)
+
+📌 Dataset must be pre-downloaded and path configured in `main()` function.
+
+---
+## 🧩 System Architecture
+
+This multi-module approach enhances detection accuracy and robustness:
+
+1. **Feature Extraction**  
+   - Extract acoustic and spectral features such as MFCCs, pitch, and spectral centroid.
+
+2. **Model Ensemble**  
+   - Train multiple detectors (e.g., SVM, Random Forest, CNN) on the extracted features.
+
+3. **Decision Fusion**  
+   - Combine model outputs using voting or weighted averaging to reach a final classification (genuine vs. deepfake).
+
+---
+
+## 🛠️ Usage Instructions
+
+1. **Ensure required libraries are installed:**  
+  ```bash
+   pip install -r requirements.txt
+````
+ 
+2. **Launch the notebook:**
+
+   ```bash
+   jupyter notebook Multi_module_Deepfake_Audio_Detector.ipynb
+   ````
+
+3. **Follow these steps within the notebook:**
+
+   * Load your audio dataset (genuine vs. deepfake)
+   * Run feature extraction
+   * Train and evaluate individual models
+   * Apply decision fusion to combine model predictions
+   * Analyze results: accuracy, precision, recall, ROC curves
 
 ---
 
@@ -69,56 +111,37 @@ After training and evaluating on the ASVspoof 2019 dataset (subset of 5,000 samp
 ├── features\_mfcc.py                             # MFCC extractor
 ├── features\_melcnn.py                           # MelCNN model + extractor
 ├── features\_rawcnn.py                           # Raw waveform CNN
-└── utils, models, configs (recommended to add)
+└── utils, models, configs 
 
 ````
 
 ---
 
-##  Dataset
+##  Requirements
 
-- Dataset used: **ASVspoof 2019 LA** (Logical Access subset)
-- Format: FLAC audio files
-- Labels: `bonafide` (real), `spoof` (deepfake)
+* Python 3.7+
+* Jupyter Notebook
+* Key libraries:
 
-📌 Dataset must be pre-downloaded and path configured in `main()` function.
-
----
-
-## ⚙️ Requirements
-
-- Python 3.7+
-- Jupyter Notebook
-- `torch`, `torchaudio`, `librosa`, `scikit-learn`, `numpy`, `matplotlib`, `seaborn`
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-````
+  ```
+  numpy, pandas, librosa, scikit-learn, tensorflow (or torch), matplotlib, seaborn
+  ```
 
 ---
 
-## Running the Project
+##  Forensic Use & Relevance
 
-1. Download the ASVspoof 2019 LA dataset.
-2. Clone this repository.
-3. Launch the notebook:
+This tool provides digital forensic analysts with a **practical, modular detection pipeline** to verify audio authenticity. It underlines the importance of:
 
-```bash
-jupyter notebook Multi_module_Deepfake_Audio_Detector.ipynb
-```
-
-4. Run each cell step-by-step:
-
-   * Load data
-   * Extract features
-   * Train models
-   * Evaluate & analyze results
+* **Reliable validation** of audio-based evidence
+* **Scientific rigour** through multi-model ensemble techniques
+* **Transparency**, enabling traceability of detection steps—crucial in legal contexts
 
 ---
 
 ## 🎓 Academic Context
 
-This project was completed as part of the **Digital Forensics course** within the Master’s in Cybersecurity program. It explores the integration of machine learning and deep learning methods in combating audio deepfakes—an emerging threat in digital forensics.
+This project was completed for the **Digital Forensics course** as part of the BSc Cybersecurity program. It aims to explore the applicability of machine learning to deepfake detection in modern forensics.
+
+
 
